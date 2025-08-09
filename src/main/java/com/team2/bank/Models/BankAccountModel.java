@@ -20,7 +20,36 @@ public class BankAccountModel {
     @JoinColumn(name = "customer_id")
     private CustomerModel customerModel;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public CustomerModel getCustomerModel() {
+        return customerModel;
+    }
+
+    public void setCustomerModel(CustomerModel customerModel) {
+        this.customerModel = customerModel;
+    }
 }
 
