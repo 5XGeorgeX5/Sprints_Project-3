@@ -1,7 +1,6 @@
 package com.team2.bank.Controllers;
 
 import com.team2.bank.DTOs.BankAccountDTO;
-import com.team2.bank.Enums.TransactionType;
 import com.team2.bank.Services.BankAccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,14 +20,14 @@ public class BankAccountController {
     }
 
     //create - create bank account
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BankAccountDTO> createBankAccount(@Valid @RequestBody BankAccountDTO bankAccountDto) {
         BankAccountDTO createdBankAccount = bankAccountService.createBankAccount(bankAccountDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBankAccount);
     }
 
     //read - get all accounts
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<BankAccountDTO>> getAllBankAccounts() {
         List<BankAccountDTO> bankAccount = bankAccountService.getAllBankAccounts();
         return ResponseEntity.ok(bankAccount);
@@ -43,7 +42,7 @@ public class BankAccountController {
 
     //read - get bank accounts by type
     @GetMapping("/types/{type}")
-    public ResponseEntity<List<BankAccountDTO>> getAccountByType(@PathVariable TransactionType type) {
+    public ResponseEntity<List<BankAccountDTO>> getAccountByType(@PathVariable String type) {
         List<BankAccountDTO> bankAccounts = bankAccountService.getAccountsByType(type);
         return ResponseEntity.ok(bankAccounts);
     }
@@ -63,14 +62,14 @@ public class BankAccountController {
     }
 
     //update - update account (by id)
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<BankAccountDTO>updateBankAccount(@PathVariable Long id, @Valid @RequestBody BankAccountDTO bankAccountDto){
         BankAccountDTO updatedBankAccount = bankAccountService.updateBankAccount(id, bankAccountDto);
         return ResponseEntity.ok(updatedBankAccount);
     }
 
     //delete - delete account (by id)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?>deleteBankAccount(@PathVariable Long id){
         bankAccountService.deleteBankAccount(id);
         return ResponseEntity.noContent().build();

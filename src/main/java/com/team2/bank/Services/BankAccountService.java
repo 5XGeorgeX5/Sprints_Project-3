@@ -56,7 +56,7 @@ public class BankAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Bank account not found"));
     }
 
-    public List<BankAccountDTO> getAccountsByType(TransactionType type) {
+    public List<BankAccountDTO> getAccountsByType(String type) {
         return bankAccountRepo.findByAccountType(type).stream()
                 .map(dtoMapper::toBankAccountDTO)
                 .collect(Collectors.toList());
