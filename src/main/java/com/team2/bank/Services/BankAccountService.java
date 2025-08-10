@@ -37,7 +37,7 @@ public class BankAccountService {
 
         Customer customer = customerRepo.findById(dto.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-        accountEntity.setCustomerModel(customer);
+        accountEntity.setCustomer(customer);
 
         return dtoMapper.toBankAccountDTO(bankAccountRepo.save(accountEntity));
     }
@@ -87,7 +87,7 @@ public class BankAccountService {
         if (dto.getCustomerId() != null) {
             Customer customer = customerRepo.findById(dto.getCustomerId())
                     .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-            existing.setCustomerModel(customer);
+            existing.setCustomer(customer);
         }
 
         return dtoMapper.toBankAccountDTO(bankAccountRepo.save(existing));
@@ -130,7 +130,7 @@ public class BankAccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.DEPOSIT);
-        transaction.setCustomerModel(account.getCustomerModel());
+        transaction.setCustomerModel(account.getCustomer());
         transactionRepo.save(transaction);
 
         return dtoMapper.toBankAccountDTO(account);
@@ -152,7 +152,7 @@ public class BankAccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.WITHDRAWAL);
-        transaction.setCustomerModel(account.getCustomerModel());
+        transaction.setCustomerModel(account.getCustomer());
         transactionRepo.save(transaction);
 
         return dtoMapper.toBankAccountDTO(account);
