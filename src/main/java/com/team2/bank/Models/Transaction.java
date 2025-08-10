@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Transaction")
-public class TransactionModel {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,12 @@ public class TransactionModel {
     private TransactionType type;
 
     @ManyToOne()
-    @JoinColumn(name = "customer_id")
-    private CustomerModel customerModel;
+    @JoinColumn(name = "account_owner_id", nullable = false)
+    private Customer accountOwner;
+
+    @ManyToOne()
+    @JoinColumn(name = "receiver_account_id")
+    private BankAccount receiverAccount;
 
     public long getId() {
         return id;
@@ -47,12 +51,12 @@ public class TransactionModel {
         this.type = type;
     }
 
-    public CustomerModel getCustomerModel() {
-        return customerModel;
+    public Customer getCustomerModel() {
+        return accountOwner;
     }
 
-    public void setCustomerModel(CustomerModel customerModel) {
-        this.customerModel = customerModel;
+    public void setCustomerModel(Customer accountOwner) {
+        this.accountOwner = accountOwner;
     }
 }
 

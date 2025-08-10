@@ -3,8 +3,8 @@ package com.team2.bank.Services;
 import com.team2.bank.DTOs.TransactionDTO;
 import com.team2.bank.Enums.TransactionType;
 import com.team2.bank.Mapper.DTOMapper;
-import com.team2.bank.Models.CustomerModel;
-import com.team2.bank.Models.TransactionModel;
+import com.team2.bank.Models.Customer;
+import com.team2.bank.Models.Transaction;
 import com.team2.bank.Repositories.CustomerRepo;
 import com.team2.bank.Repositories.TransactionRepo;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,8 +28,8 @@ public class TransactionService {
 
     // create
     public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
-        TransactionModel transaction = dtoMapper.toTransactionEntity(transactionDTO);
-        TransactionModel saved = transactionRepo.save(transaction);
+        Transaction transaction = dtoMapper.toTransactionEntity(transactionDTO);
+        Transaction saved = transactionRepo.save(transaction);
         return dtoMapper.toTransactionDTO(saved);
     }
 
@@ -42,7 +42,7 @@ public class TransactionService {
 
     // read by ID
     public TransactionDTO getTransactionById(Long id) {
-        TransactionModel transaction = transactionRepo.findById(id)
+        Transaction transaction = transactionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + id));
         return dtoMapper.toTransactionDTO(transaction);
     }
@@ -56,17 +56,17 @@ public class TransactionService {
 
     // update
     public TransactionDTO updateTransaction(Long id, TransactionDTO updatedDTO) {
-        TransactionModel existing = transactionRepo.findById(id)
+        Transaction existing = transactionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + id));
 
-        CustomerModel customer = customerRepo.findById(updatedDTO.getCustomerId())
+        Customer customer = customerRepo.findById(updatedDTO.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id " + updatedDTO.getCustomerId()));
 
         existing.setCustomerModel(customer);
         existing.setAmount(updatedDTO.getAmount());
         existing.setType(updatedDTO.getType());
 
-        TransactionModel saved = transactionRepo.save(existing);
+        Transaction saved = transactionRepo.save(existing);
         return dtoMapper.toTransactionDTO(saved);
     }
     // delete
@@ -85,7 +85,7 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
     public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
-        return transactionRepo.findByCustomerModel_BankAccountModel_Id(accountId).stream()
+        return transactionRepo.findByCustomer_BankAccount_Id(accountId).stream()
                 .map(dtoMapper::toTransactionDTO)
                 .collect(Collectors.toList());
     }

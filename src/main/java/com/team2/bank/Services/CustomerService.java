@@ -2,7 +2,7 @@ package com.team2.bank.Services;
 
 import com.team2.bank.DTOs.CustomerDTO;
 import com.team2.bank.Mapper.DTOMapper;
-import com.team2.bank.Models.CustomerModel;
+import com.team2.bank.Models.Customer;
 import com.team2.bank.Repositories.CustomerRepo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,8 +24,8 @@ public class CustomerService {
 
     // create
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        CustomerModel customerEntity = dtoMapper.toCustomerEntity(customerDTO);
-        CustomerModel savedEntity = customerRepo.save(customerEntity);
+        Customer customerEntity = dtoMapper.toCustomerEntity(customerDTO);
+        Customer savedEntity = customerRepo.save(customerEntity);
         return dtoMapper.toCustomerDTO(savedEntity);
     }
 
@@ -38,7 +38,7 @@ public class CustomerService {
     }
 
     public CustomerDTO getCustomerById(Long id) {
-        CustomerModel customer = customerRepo.findById(id)
+        Customer customer = customerRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         return dtoMapper.toCustomerDTO(customer);
     }
@@ -50,13 +50,13 @@ public class CustomerService {
 
     // update
     public CustomerDTO updateCustomer(Long id, CustomerDTO updatedDTO) {
-        CustomerModel existing = customerRepo.findById(id)
+        Customer existing = customerRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
         existing.setName(updatedDTO.getName());
         existing.setEmail(updatedDTO.getEmail());
 
-        CustomerModel updatedEntity = customerRepo.save(existing);
+        Customer updatedEntity = customerRepo.save(existing);
         return dtoMapper.toCustomerDTO(updatedEntity);
     }
 

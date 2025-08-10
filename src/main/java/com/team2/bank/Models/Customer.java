@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Customer")
-public class CustomerModel {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,13 +19,13 @@ public class CustomerModel {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "customerModel", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private BankAccountModel bankAccountModel;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private BankAccount bankAccount;
 
 
-    @OneToMany(mappedBy = "customerModel" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "accountOwner" , cascade = CascadeType.REMOVE)
     @JsonIgnore
-    private List<TransactionModel> transactionModels;
+    private List<Transaction> transactions;
 
     public Long getId() {
         return id;
@@ -51,20 +51,20 @@ public class CustomerModel {
         this.email = email;
     }
 
-    public BankAccountModel getBankAccountModel() {
-        return bankAccountModel;
+    public BankAccount getBankAccountModel() {
+        return bankAccount;
     }
 
-    public void setBankAccountModel(BankAccountModel bankAccountModel) {
-        this.bankAccountModel = bankAccountModel;
+    public void setBankAccountModel(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
-    public List<TransactionModel> getTransactionModels() {
-        return transactionModels;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setTransactionModels(List<TransactionModel> transactionModels) {
-        this.transactionModels = transactionModels;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
 

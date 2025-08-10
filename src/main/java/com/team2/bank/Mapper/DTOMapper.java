@@ -1,8 +1,8 @@
 package com.team2.bank.Mapper;
 
-import com.team2.bank.Models.CustomerModel;
-import com.team2.bank.Models.BankAccountModel;
-import com.team2.bank.Models.TransactionModel;
+import com.team2.bank.Models.Customer;
+import com.team2.bank.Models.BankAccount;
+import com.team2.bank.Models.Transaction;
 import com.team2.bank.DTOs.CustomerDTO;
 import com.team2.bank.DTOs.BankAccountDTO;
 import com.team2.bank.DTOs.TransactionDTO;
@@ -18,27 +18,27 @@ public class DTOMapper {
         this.modelMapper = modelMapper;
     }
 
-    public CustomerDTO toCustomerDTO(CustomerModel customer) {
+    public CustomerDTO toCustomerDTO(Customer customer) {
         return modelMapper.map(customer, CustomerDTO.class);
     }
 
-    public CustomerModel toCustomerEntity(CustomerDTO dto) {
-        return modelMapper.map(dto, CustomerModel.class);
+    public Customer toCustomerEntity(CustomerDTO dto) {
+        return modelMapper.map(dto, Customer.class);
     }
 
-    public BankAccountDTO toBankAccountDTO(BankAccountModel bankAccount) {
+    public BankAccountDTO toBankAccountDTO(BankAccount bankAccount) {
         return modelMapper.map(bankAccount, BankAccountDTO.class);
     }
 
-    public BankAccountModel toBankAccountEntity(BankAccountDTO dto) {
-        return modelMapper.map(dto, BankAccountModel.class);
+    public BankAccount toBankAccountEntity(BankAccountDTO dto) {
+        return modelMapper.map(dto, BankAccount.class);
     }
 
-    public TransactionDTO toTransactionDTO(TransactionModel transaction) {
+    public TransactionDTO toTransactionDTO(Transaction transaction) {
         return modelMapper.map(transaction, TransactionDTO.class);
     }
 
-    public TransactionModel toTransactionEntity(TransactionDTO dto) {
-        return modelMapper.map(dto, TransactionModel.class);
+    public Transaction toTransactionEntity(TransactionDTO dto) {
+        return modelMapper.map(dto, Transaction.class);
     }
 }

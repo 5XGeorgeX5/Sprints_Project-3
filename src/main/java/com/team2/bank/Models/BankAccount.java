@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "BankAccount")
-public class BankAccountModel {
+public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class BankAccountModel {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private CustomerModel customerModel;
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -44,12 +44,12 @@ public class BankAccountModel {
         this.accountType = accountType;
     }
 
-    public CustomerModel getCustomerModel() {
-        return customerModel;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerModel(CustomerModel customerModel) {
-        this.customerModel = customerModel;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
 

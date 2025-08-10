@@ -3,9 +3,9 @@ package com.team2.bank.Services;
 import com.team2.bank.DTOs.BankAccountDTO;
 import com.team2.bank.Enums.TransactionType;
 import com.team2.bank.Mapper.DTOMapper;
-import com.team2.bank.Models.BankAccountModel;
-import com.team2.bank.Models.CustomerModel;
-import com.team2.bank.Models.TransactionModel;
+import com.team2.bank.Models.BankAccount;
+import com.team2.bank.Models.Customer;
+import com.team2.bank.Models.Transaction;
 import com.team2.bank.Repositories.BankAccountRepo;
 import com.team2.bank.Repositories.CustomerRepo;
 import com.team2.bank.Repositories.TransactionRepo;
@@ -33,9 +33,9 @@ public class BankAccountService {
 
     // create
     public BankAccountDTO createBankAccount(BankAccountDTO dto) {
-        BankAccountModel accountEntity = dtoMapper.toBankAccountEntity(dto);
+        BankAccount accountEntity = dtoMapper.toBankAccountEntity(dto);
 
-        CustomerModel customer = customerRepo.findById(dto.getCustomerId())
+        Customer customer = customerRepo.findById(dto.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         accountEntity.setCustomerModel(customer);
 
@@ -78,14 +78,14 @@ public class BankAccountService {
 
     // update
     public BankAccountDTO updateBankAccount(Long id, BankAccountDTO dto) {
-        BankAccountModel existing = bankAccountRepo.findById(id)
+        BankAccount existing = bankAccountRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bank account not found"));
 
         existing.setBalance(dto.getBalance());
         existing.setAccountType(dto.getAccountType());
 
         if (dto.getCustomerId() != null) {
-            CustomerModel customer = customerRepo.findById(dto.getCustomerId())
+            Customer customer = customerRepo.findById(dto.getCustomerId())
                     .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
             existing.setCustomerModel(customer);
         }
@@ -103,10 +103,10 @@ public class BankAccountService {
     public void transferMoney(Long senderAccountId, Long receiverAccountId, Double amount) {
         if (amount <= 0) throw new IllegalArgumentException("Transfer amount must be positive");
 
-        BankAccountModel sender = bankAccountRepo.findById(senderAccountId)
+        BankAccount sender = bankAccountRepo.findById(senderAccountId)
                 .orElseThrow(() -> new EntityNotFoundException("Sender account not found"));
 
-        BankAccountModel receiver = bankAccountRepo.findById(receiverAccountId)
+        BankAccount receiver = bankAccountRepo.findById(receiverAccountId)
                 .orElseThrow(() -> new EntityNotFoundException("Receiver account not found"));
 
         if (sender.getBalance() < amount) throw new IllegalArgumentException("Insufficient funds");
@@ -120,14 +120,14 @@ public class BankAccountService {
 
     @Transactional
     public BankAccountDTO deposit(Long accountId, Double amount) {
-        BankAccountModel account = bankAccountRepo.findById(accountId)
+        BankAccount account = bankAccountRepo.findById(accountId)
                 .orElseThrow(() -> new EntityNotFoundException("Account not found"));
 
         account.setBalance(account.getBalance() + amount);
         bankAccountRepo.save(account);
 
         // Record transaction
-        TransactionModel transaction = new TransactionModel();
+        Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.DEPOSIT);
         transaction.setCustomerModel(account.getCustomerModel());
@@ -138,7 +138,7 @@ public class BankAccountService {
 
     @Transactional
     public BankAccountDTO withdraw(Long accountId, Double amount) {
-        BankAccountModel account = bankAccountRepo.findById(accountId)
+        BankAccount account = bankAccountRepo.findById(accountId)
                 .orElseThrow(() -> new EntityNotFoundException("Account not found"));
 
         if (account.getBalance() < amount) {
@@ -149,7 +149,7 @@ public class BankAccountService {
         bankAccountRepo.save(account);
 
         // Record transaction
-        TransactionModel transaction = new TransactionModel();
+        Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.WITHDRAWAL);
         transaction.setCustomerModel(account.getCustomerModel());
