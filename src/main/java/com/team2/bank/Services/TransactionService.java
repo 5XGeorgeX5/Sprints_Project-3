@@ -62,7 +62,7 @@ public class TransactionService {
         Customer customer = customerRepo.findById(updatedDTO.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id " + updatedDTO.getCustomerId()));
 
-        existing.setCustomerModel(customer);
+        existing.setAccountOwner(customer);
         existing.setAmount(updatedDTO.getAmount());
         existing.setType(updatedDTO.getType());
 
@@ -80,12 +80,12 @@ public class TransactionService {
 
     public List<TransactionDTO> getTransactionsByCustomerId(Long customerId) {
         return transactionRepo.findAll().stream()
-                .filter(transaction -> transaction.getCustomerModel().getId().equals(customerId))
+                .filter(transaction -> transaction.getAccountOwner().getId().equals(customerId))
                 .map(dtoMapper::toTransactionDTO)
                 .collect(Collectors.toList());
     }
     public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
-        return transactionRepo.findByCustomer_BankAccount_Id(accountId).stream()
+        return transactionRepo.findByAccountOwner_BankAccount_Id(accountId).stream()
                 .map(dtoMapper::toTransactionDTO)
                 .collect(Collectors.toList());
     }

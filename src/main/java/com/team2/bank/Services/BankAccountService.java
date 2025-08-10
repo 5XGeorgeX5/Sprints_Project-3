@@ -1,6 +1,7 @@
 package com.team2.bank.Services;
 
 import com.team2.bank.DTOs.BankAccountDTO;
+import com.team2.bank.Enums.BankAccountType;
 import com.team2.bank.Enums.TransactionType;
 import com.team2.bank.Mapper.DTOMapper;
 import com.team2.bank.Models.BankAccount;
@@ -56,7 +57,7 @@ public class BankAccountService {
                 .orElseThrow(() -> new EntityNotFoundException("Bank account not found"));
     }
 
-    public List<BankAccountDTO> getAccountsByType(String type) {
+    public List<BankAccountDTO> getAccountsByType(BankAccountType type) {
         return bankAccountRepo.findByAccountType(type).stream()
                 .map(dtoMapper::toBankAccountDTO)
                 .collect(Collectors.toList());
@@ -130,7 +131,7 @@ public class BankAccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.DEPOSIT);
-        transaction.setCustomerModel(account.getCustomer());
+        transaction.setAccountOwner(account.getCustomer());
         transactionRepo.save(transaction);
 
         return dtoMapper.toBankAccountDTO(account);
@@ -152,7 +153,7 @@ public class BankAccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setType(TransactionType.WITHDRAWAL);
-        transaction.setCustomerModel(account.getCustomer());
+        transaction.setAccountOwner(account.getCustomer());
         transactionRepo.save(transaction);
 
         return dtoMapper.toBankAccountDTO(account);

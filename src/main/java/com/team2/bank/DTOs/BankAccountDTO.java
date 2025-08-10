@@ -1,5 +1,7 @@
 package com.team2.bank.DTOs;
 
+import com.team2.bank.Enums.BankAccountType;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -13,13 +15,13 @@ public class BankAccountDTO {
     private Double balance;
 
     @NotBlank(message = "Account type is required")
-    private String accountType;
+    private BankAccountType accountType;
 
     private Long customerId;
 
     public BankAccountDTO() {}
 
-    public BankAccountDTO(Long id, Double balance, String accountType, Long customerId) {
+    public BankAccountDTO(Long id, Double balance, BankAccountType accountType, Long customerId) {
         this.id = id;
         this.balance = balance;
         this.accountType = accountType;
@@ -32,8 +34,8 @@ public class BankAccountDTO {
     public Double getBalance() { return balance; }
     public void setBalance(Double balance) { this.balance = balance; }
 
-    public String getAccountType() { return accountType; }
-    public void setAccountType(String accountType) { this.accountType = accountType; }
+    public BankAccountType getAccountType() { return accountType; }
+    public void setAccountType(BankAccountType accountType) { this.accountType = accountType; }
 
     public Long getCustomerId() { return customerId; }
     public void setCustomerId(Long customerId) { this.customerId = customerId; }

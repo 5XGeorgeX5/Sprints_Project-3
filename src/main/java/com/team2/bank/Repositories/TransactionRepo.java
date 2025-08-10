@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepo extends JpaRepository<Transaction,Long> {
     List<Transaction> findByType(TransactionType type);
-    List<Transaction> findByCustomer_BankAccount_Id(Long accountId);
+    List<Transaction> findByAccountOwner_BankAccount_Id(Long accountId);
     @Modifying
     void deleteByType(TransactionType type);
 

@@ -1,5 +1,6 @@
 package com.team2.bank.Repositories;
 
+import com.team2.bank.Enums.BankAccountType;
 import com.team2.bank.Models.BankAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface BankAccountRepo extends JpaRepository<BankAccount, Long> {
-    List<BankAccount> findByAccountType(String type);
+    List<BankAccount> findByAccountType(BankAccountType type);
     List<BankAccount> findByBalanceGreaterThan(Double amount);
 
     @Query("SELECT b FROM BankAccount b WHERE b.balance BETWEEN :min AND :max")

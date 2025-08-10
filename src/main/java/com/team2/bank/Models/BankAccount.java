@@ -1,4 +1,6 @@
 package com.team2.bank.Models;
+import com.team2.bank.Enums.BankAccountType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +15,7 @@ public class BankAccount {
     private double balance;
 
     @Column(name = "accountType",nullable = false)
-    private String accountType;
+    private BankAccountType accountType;
 
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -36,11 +38,11 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public String getAccountType() {
+    public BankAccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(BankAccountType accountType) {
         this.accountType = accountType;
     }
 

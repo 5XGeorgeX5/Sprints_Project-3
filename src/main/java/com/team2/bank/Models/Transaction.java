@@ -51,11 +51,11 @@ public class Transaction {
         this.type = type;
     }
 
-    public Customer getCustomerModel() {
+    public Customer getAccountOwner() {
         return accountOwner;
     }
 
-    public void setCustomerModel(Customer accountOwner) {
+    public void setAccountOwner(Customer accountOwner) {
         this.accountOwner = accountOwner;
     }
 }

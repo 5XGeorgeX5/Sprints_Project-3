@@ -1,6 +1,7 @@
 package com.team2.bank.Controllers;
 
 import com.team2.bank.DTOs.BankAccountDTO;
+import com.team2.bank.Enums.BankAccountType;
 import com.team2.bank.Services.BankAccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class BankAccountController {
 
     //read - get bank accounts by type
     @GetMapping("/types/{type}")
-    public ResponseEntity<List<BankAccountDTO>> getAccountByType(@PathVariable String type) {
+    public ResponseEntity<List<BankAccountDTO>> getAccountByType(@PathVariable BankAccountType type) {
         List<BankAccountDTO> bankAccounts = bankAccountService.getAccountsByType(type);
         return ResponseEntity.ok(bankAccounts);
     }
