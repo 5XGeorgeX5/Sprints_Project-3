@@ -7,24 +7,18 @@ import jakarta.validation.constraints.Positive;
 public class TransactionDTO {
 
     private Long id;
-
-    @NotNull(message = "Customer ID is required")
-    private Long customerId;
-
-    @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be positive")
+    private CustomerDTO accountOwner;
+    private BankAccountDTO receiverAccount;
     private Double amount;
-
-    @NotNull(message = "Transaction type is required")
     private TransactionType type;
 
 
     public TransactionDTO() {
     }
 
-    public TransactionDTO(Long id, Long customerId, Double amount, TransactionType type) {
+    public TransactionDTO(Long id, CustomerDTO accountOwner, Double amount, TransactionType type) {
         this.id = id;
-        this.customerId = customerId;
+        this.accountOwner = accountOwner;
         this.amount = amount;
         this.type = type;
     }
@@ -37,12 +31,12 @@ public class TransactionDTO {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public CustomerDTO getAccountOwner() {
+        return accountOwner;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setAccountOwner(CustomerDTO accountOwner) {
+        this.accountOwner = accountOwner;
     }
 
     public Double getAmount() {
@@ -59,5 +53,13 @@ public class TransactionDTO {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public BankAccountDTO getReceiverAccount() {
+        return receiverAccount;
+    }
+
+    public void setReceiverAccount(BankAccountDTO receiverAccount) {
+        this.receiverAccount = receiverAccount;
     }
 }

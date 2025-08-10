@@ -59,8 +59,8 @@ public class TransactionService {
         Transaction existing = transactionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Transaction not found with id " + id));
 
-        Customer customer = customerRepo.findById(updatedDTO.getCustomerId())
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found with id " + updatedDTO.getCustomerId()));
+        Customer customer = customerRepo.findById(updatedDTO.getAccountOwner().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found with id " + updatedDTO.getAccountOwner().getId()));
 
         existing.setAccountOwner(customer);
         existing.setAmount(updatedDTO.getAmount());

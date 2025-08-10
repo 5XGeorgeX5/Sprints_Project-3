@@ -115,8 +115,15 @@ public class BankAccountService {
         sender.setBalance(sender.getBalance() - amount);
         receiver.setBalance(receiver.getBalance() + amount);
 
+        Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setType(TransactionType.TRANSFER);
+        transaction.setAccountOwner(sender.getCustomer());
+        transaction.setReceiverAccount(receiver);
+
         bankAccountRepo.save(sender);
         bankAccountRepo.save(receiver);
+        transactionRepo.save(transaction);
     }
 
     @Transactional

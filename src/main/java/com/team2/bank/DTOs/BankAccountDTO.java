@@ -13,7 +13,7 @@ public class BankAccountDTO {
     @PositiveOrZero(message = "Balance cannot be negative")
     private Double balance;
 
-    @NotBlank(message = "Account type is required")
+    @NotNull(message = "Account type is required")
     private BankAccountType accountType;
 
     private Long customerId;

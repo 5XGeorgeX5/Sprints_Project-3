@@ -20,11 +20,11 @@ public class TransactionController {
     }
 
     //create - create transaction
-    @PostMapping("/create")
-    public ResponseEntity<TransactionDTO> createTransaction(@Valid @RequestBody TransactionDTO transactionDto) {
-        TransactionDTO created = transactionService.createTransaction(transactionDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<TransactionDTO> createTransaction(@Valid @RequestBody TransactionDTO transactionDto) {
+//        TransactionDTO created = transactionService.createTransaction(transactionDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+//    }
 
     //read - get all transactions
     @GetMapping("/all")

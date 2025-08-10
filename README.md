@@ -497,37 +497,37 @@ Response:
 ## Transactions
 Transactions support types: `DEPOSIT`, `WITHDRAWAL`, `TRANSFER`.
 
-### Create transaction
-`POST /transactions`
 
 Examples:
 
-### Deposit/Withdraw:
-
-```json
-{
-    "accountId": 1,
-    "type": "DEPOSIT",
-    "amount": 250.0,
-    "description": "Salary"
-}
-```
-
-### Transfer:
-
-```json
-{
-    "senderAccountId": 1,
-    "receiverAccountId": 2,
-    "type": "TRANSFER",
-    "amount": 100.0,
-    "description": "Rent share"
-}
-```
-
 ### List transactions (optional filter by account)
-`GET /transactions?page=0&size=50`
-`GET /transactions?accountId=1&page=0&size=50`
+`GET /transactions`
+```json
+[
+  {
+    "id": 1,
+    "accountOwner": {
+      "id": 1,
+      "name": "George",
+      "email": "test@test.com",
+      "bankAccount": {
+        "id": 1,
+        "balance": 50,
+        "accountType": "SAVINGS",
+        "customerId": 1
+      }
+    },
+    "receiverAccount": {
+      "id": 2,
+      "balance": 150,
+      "accountType": "SAVINGS",
+      "customerId": 2
+    },
+    "amount": 50,
+    "type": "TRANSFER"
+  }
+]
+```
 
 ### Delete transaction
 `DELETE /transactions/{id}`
@@ -535,12 +535,19 @@ Examples:
 
 ---
 
-## Entities & DTOs (overview)
+## Enums, Entities, and DTOs (overview)
+
+### ENUMs
+
+- `BankAccountType` — CHECKING, SAVINGS, CURRENT
+
+- `TransactionType` — DEPOSIT, WITHDRAWAL, TRANSFER
 
 ### Entities (conceptual)
 - `Customer` — id, firstName, lastName, email, phone, bankAccount
-- `BankAccount` — id, balance (double), accountType (String), customer
-- `Transaction` — id, account (or sender/receiver for transfers), type, amount (double), timestamp, description
+- `BankAccount` — id, balance (double), accountType (BankAccountType), customer
+- `Transaction` — id, account (or sender/receiver for transfers), type (TransactionType), amount (double), timestamp, description
+
 
 ### DTOs
 - `CustomerDTO` — customer data; may include the associated bank account

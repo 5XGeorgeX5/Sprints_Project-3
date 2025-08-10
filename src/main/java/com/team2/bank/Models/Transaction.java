@@ -59,5 +59,13 @@ public class Transaction {
     public void setAccountOwner(Customer accountOwner) {
         this.accountOwner = accountOwner;
     }
+
+    public BankAccount getReceiverAccount() {
+        return receiverAccount;
+    }
+
+    public void setReceiverAccount(BankAccount receiverAccount) {
+        this.receiverAccount = receiverAccount;
+    }
 }
 
