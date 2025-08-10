@@ -50,13 +50,13 @@ public class CustomerController {
     //update - update customer
     @PutMapping("update/{id}")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDTO customerDTO) {
-        CustomerDTO updatedCustomer = customerService.updateCustomer(id,customerDTO);
+        CustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
         return ResponseEntity.ok(updatedCustomer);
     }
 
     //delete - delete customer
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?>deleteCustomer(@PathVariable Long id){
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }

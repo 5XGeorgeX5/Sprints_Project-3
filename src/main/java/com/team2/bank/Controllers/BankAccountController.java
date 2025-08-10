@@ -64,14 +64,14 @@ public class BankAccountController {
 
     //update - update account (by id)
     @PutMapping("update/{id}")
-    public ResponseEntity<BankAccountDTO>updateBankAccount(@PathVariable Long id, @Valid @RequestBody BankAccountDTO bankAccountDto){
+    public ResponseEntity<BankAccountDTO> updateBankAccount(@PathVariable Long id, @Valid @RequestBody BankAccountDTO bankAccountDto) {
         BankAccountDTO updatedBankAccount = bankAccountService.updateBankAccount(id, bankAccountDto);
         return ResponseEntity.ok(updatedBankAccount);
     }
 
     //delete - delete account (by id)
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?>deleteBankAccount(@PathVariable Long id){
+    public ResponseEntity<?> deleteBankAccount(@PathVariable Long id) {
         bankAccountService.deleteBankAccount(id);
         return ResponseEntity.noContent().build();
     }

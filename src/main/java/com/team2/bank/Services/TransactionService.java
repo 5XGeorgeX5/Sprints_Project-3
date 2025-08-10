@@ -69,10 +69,12 @@ public class TransactionService {
         Transaction saved = transactionRepo.save(existing);
         return dtoMapper.toTransactionDTO(saved);
     }
+
     // delete
     public void deleteTransaction(Long id) {
         transactionRepo.deleteById(id);
     }
+
     @Transactional
     public void deleteTransactionsByType(TransactionType type) {
         transactionRepo.deleteByType(type);
@@ -84,6 +86,7 @@ public class TransactionService {
                 .map(dtoMapper::toTransactionDTO)
                 .collect(Collectors.toList());
     }
+
     public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
         return transactionRepo.findByAccountOwner_BankAccount_Id(accountId).stream()
                 .map(dtoMapper::toTransactionDTO)

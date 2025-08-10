@@ -1,11 +1,11 @@
 package com.team2.bank.Mapper;
 
-import com.team2.bank.Models.Customer;
-import com.team2.bank.Models.BankAccount;
-import com.team2.bank.Models.Transaction;
-import com.team2.bank.DTOs.CustomerDTO;
 import com.team2.bank.DTOs.BankAccountDTO;
+import com.team2.bank.DTOs.CustomerDTO;
 import com.team2.bank.DTOs.TransactionDTO;
+import com.team2.bank.Models.BankAccount;
+import com.team2.bank.Models.Customer;
+import com.team2.bank.Models.Transaction;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

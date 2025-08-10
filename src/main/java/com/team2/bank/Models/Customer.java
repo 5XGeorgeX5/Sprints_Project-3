@@ -13,7 +13,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "email", nullable = false)
@@ -23,7 +23,7 @@ public class Customer {
     private BankAccount bankAccount;
 
 
-    @OneToMany(mappedBy = "accountOwner" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "accountOwner", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Transaction> transactions;
 
@@ -51,11 +51,11 @@ public class Customer {
         this.email = email;
     }
 
-    public BankAccount getBankAccountModel() {
+    public BankAccount getBankAccount() {
         return bankAccount;
     }
 
-    public void setBankAccountModel(BankAccount bankAccount) {
+    public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
     }
 

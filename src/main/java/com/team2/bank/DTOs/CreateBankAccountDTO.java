@@ -1,7 +1,6 @@
 package com.team2.bank.DTOs;
 
 import com.team2.bank.Enums.BankAccountType;
-
 import lombok.Data;
 
 @Data

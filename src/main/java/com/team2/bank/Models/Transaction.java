@@ -1,7 +1,6 @@
 package com.team2.bank.Models;
 
 import com.team2.bank.Enums.TransactionType;
-
 import jakarta.persistence.*;
 
 @Entity

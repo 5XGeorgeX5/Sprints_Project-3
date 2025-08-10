@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TransactionRepo extends JpaRepository<Transaction,Long> {
+public interface TransactionRepo extends JpaRepository<Transaction, Long> {
     List<Transaction> findByType(TransactionType type);
+
     List<Transaction> findByAccountOwner_BankAccount_Id(Long accountId);
+
     @Modifying
     void deleteByType(TransactionType type);
 

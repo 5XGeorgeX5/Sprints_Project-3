@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
 public interface BankAccountRepo extends JpaRepository<BankAccount, Long> {
     List<BankAccount> findByAccountType(BankAccountType type);
+
     List<BankAccount> findByBalanceGreaterThan(Double amount);
 
     @Query("SELECT b FROM BankAccount b WHERE b.balance BETWEEN :min AND :max")

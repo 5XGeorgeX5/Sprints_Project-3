@@ -1,6 +1,6 @@
 package com.team2.bank.Models;
-import com.team2.bank.Enums.BankAccountType;
 
+import com.team2.bank.Enums.BankAccountType;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,10 +11,10 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "balance",nullable = false)
+    @Column(name = "balance", nullable = false)
     private double balance;
 
-    @Column(name = "accountType",nullable = false)
+    @Column(name = "accountType", nullable = false)
     private BankAccountType accountType;
 
 

@@ -1,7 +1,6 @@
 package com.team2.bank.DTOs;
 
 import com.team2.bank.Enums.BankAccountType;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -19,7 +18,8 @@ public class BankAccountDTO {
 
     private Long customerId;
 
-    public BankAccountDTO() {}
+    public BankAccountDTO() {
+    }
 
     public BankAccountDTO(Long id, Double balance, BankAccountType accountType, Long customerId) {
         this.id = id;
@@ -28,15 +28,35 @@ public class BankAccountDTO {
         this.customerId = customerId;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public Double getBalance() { return balance; }
-    public void setBalance(Double balance) { this.balance = balance; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public BankAccountType getAccountType() { return accountType; }
-    public void setAccountType(BankAccountType accountType) { this.accountType = accountType; }
+    public Double getBalance() {
+        return balance;
+    }
 
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public BankAccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(BankAccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 }
