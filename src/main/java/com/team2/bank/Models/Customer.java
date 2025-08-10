@@ -24,7 +24,6 @@ public class Customer {
 
 
     @OneToMany(mappedBy = "accountOwner", cascade = CascadeType.REMOVE)
-    @JsonIgnore
     private List<Transaction> transactions;
 
     public Long getId() {

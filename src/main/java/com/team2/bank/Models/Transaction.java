@@ -1,5 +1,6 @@
 package com.team2.bank.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team2.bank.Enums.TransactionType;
 import jakarta.persistence.*;
 
@@ -20,6 +21,7 @@ public class Transaction {
 
     @ManyToOne()
     @JoinColumn(name = "account_owner_id", nullable = false)
+    @JsonIgnore
     private Customer accountOwner;
 
     @ManyToOne()

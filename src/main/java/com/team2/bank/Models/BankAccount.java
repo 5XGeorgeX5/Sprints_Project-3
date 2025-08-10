@@ -1,5 +1,6 @@
 package com.team2.bank.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team2.bank.Enums.BankAccountType;
 import jakarta.persistence.*;
 
@@ -20,6 +21,7 @@ public class BankAccount {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     public Long getId() {
