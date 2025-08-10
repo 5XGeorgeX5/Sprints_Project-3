@@ -46,6 +46,65 @@ Username: sa Password: (empty)
 
 ---
 
+## API Documentation
+Explore the API documentation at http://localhost:8080/swagger-ui.html
+
+---
+
+## Project Structure
+
+```
+└── 5xgeorgex5-sprints_project-3/
+    ├── README.md
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    ├── src/
+    │   ├── main/
+    │   │   ├── java/
+    │   │   │   └── com/
+    │   │   │       └── team2/
+    │   │   │           └── bank/
+    │   │   │               ├── BankApplication.java
+    │   │   │               ├── Config/
+    │   │   │               │   └── ModelMapperConfig.java
+    │   │   │               ├── Controllers/
+    │   │   │               │   ├── BankAccountController.java
+    │   │   │               │   ├── CustomerController.java
+    │   │   │               │   └── TransactionController.java
+    │   │   │               ├── DTOs/
+    │   │   │               │   ├── BankAccountDTO.java
+    │   │   │               │   ├── CustomerDTO.java
+    │   │   │               │   └── TransactionDTO.java
+    │   │   │               ├── Enums/
+    │   │   │               │   └── TransactionType.java
+    │   │   │               ├── Mapper/
+    │   │   │               │   └── DTOMapper.java
+    │   │   │               ├── Models/
+    │   │   │               │   ├── BankAccountModel.java
+    │   │   │               │   ├── CustomerModel.java
+    │   │   │               │   └── TransactionModel.java
+    │   │   │               ├── Repositories/
+    │   │   │               │   ├── BankAccountRepo.java
+    │   │   │               │   ├── CustomerRepo.java
+    │   │   │               │   └── TransactionRepo.java
+    │   │   │               └── Services/
+    │   │   │                   ├── BankAccountService.java
+    │   │   │                   ├── CustomerService.java
+    │   │   │                   └── TransactionService.java
+    │   │   └── resources/
+    │   │       └── application.properties
+    │   └── test/
+    │       └── java/
+    │           └── com/
+    │               └── team2/
+    │                   └── bank/
+    │                       └── BankApplicationTests.java
+    └── .mvn/
+        └── wrapper/
+            └── maven-wrapper.properties
+```
+
 ## Build & Run
 
 ### Using embedded H2 (default)
@@ -99,25 +158,91 @@ All endpoints return JSON and follow REST convention
 
 ## Customers
 ### Create customer
-`POST /customers`
+`POST /customers` //
+`http://localhost:8080/customers/create`
+
+Request:
 
 ```json
 {
-  "firstName": "Ahmed",
-  "lastName": "Ali",
-  "email": "ahmed@example.com",
-  "phone": "+20100..."
+  "name": "kadyy",
+  "email": "kadyy@gmail.com"
+}
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "name": "kadyy",
+  "email": "kadyy@gmail.com",
+  "bankAccount": null
 }
 ```
 
 ### Get customer by id
-`GET /customers/{id}`
+`GET /customers/{id}` // `http://localhost:8080/customers/1`
 
-### List customers (paged)
-`GET /customers?page=0&size=20`
+Response:
+
+```json
+{
+  "id": 1,
+  "name": "kadyy",
+  "email": "kadyy@gmail.com",
+  "bankAccount": null
+}
+```
+
+### Get customer by email
+`GET /customers/search` // `http://localhost:8080/customers/search?email=kadyy%40gmail.com`
+
+Response:
+
+```json
+{
+  "id": 1,
+  "name": "kadyy",
+  "email": "kadyy@gmail.com",
+  "bankAccount": null
+}
+```
+
+### Get all customers
+`GET /customers/all` // `http://localhost:8080/customers/all`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "kadyy",
+    "email": "kadyy@gmail.com",
+    "bankAccount": {
+      "id": 1,
+      "balance": 6000,
+      "accountType": "CURRENT",
+      "customerId": 1
+    }
+  },
+  {
+    "id": 2,
+    "name": "yasmine",
+    "email": "yasmine@gmail.com",
+    "bankAccount": {
+      "id": 2,
+      "balance": 10000,
+      "accountType": "SAVINGS",
+      "customerId": 2
+    }
+  }
+]
+```
 
 ### Update customer
-`PUT /customers/{id}`
+`PUT /customers/update/{id}`
 
 ### Delete customer
 `DELETE /customers/{id}`
@@ -128,24 +253,241 @@ All endpoints return JSON and follow REST convention
 Note: In the current model, each customer is associated with a single bank account (one-to-one).
 
 ### Create account
-`POST /accounts`
+`POST /accounts/create` // `http://localhost:8080/accounts/create`
+
+Request:
 
 ```json
 {
-  "customerId": 1,
+  "balance": 5000,
   "accountType": "SAVINGS",
-  "initialBalance": 1000.0
+  "customerId": 1
+}
+```
+
+Response:
+
+```json
+{
+  "id": 2,
+  "balance": 5000,
+  "accountType": "SAVINGS",
+  "customerId": 1
 }
 ```
 
 ### Get account by id
-`GET /accounts/{id}`
+`GET /accounts/{id}` // `http://localhost:8080/accounts/2`
 
-### List accounts (paged)
-`GET /accounts?page=0&size=20`
+Response:
+
+```json
+{
+  "id": 2,
+  "balance": 5000,
+  "accountType": "SAVINGS",
+  "customerId": 1
+}
+```
+
+### Get accounts by type
+`GET /accounts/types/{type}` // `http://localhost:8080/accounts/types/SAVINGS`
+
+Response:
+
+```json
+[
+  {
+    "id": 2,
+    "balance": 10000,
+    "accountType": "SAVINGS",
+    "customerId": 2
+  }
+]
+```
+
+### Get accounts by balance range
+`GET /accounts/balance/in-range` // `http://localhost:8080/accounts/balance/in-range?min=2000&max=7000`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "balance": 6000,
+    "accountType": "CURRENT",
+    "customerId": 1
+  }
+]
+```
+
+`http://localhost:8080/accounts/balance/in-range?min=2000&max=10000`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "balance": 6000,
+    "accountType": "CURRENT",
+    "customerId": 1
+  },
+  {
+    "id": 2,
+    "balance": 10000,
+    "accountType": "SAVINGS",
+    "customerId": 2
+  }
+]
+```
+
+### Get accounts greater than balance
+`GET /accounts/balance/greater-than/{amount}` // `http://localhost:8080/accounts/balance/greater-than/6000`
+
+```json
+[
+  {
+    "id": 2,
+    "balance": 10000,
+    "accountType": "SAVINGS",
+    "customerId": 2
+  }
+]
+```
+
+### Get all accounts
+`GET /accounts/all` // `http://localhost:8080/accounts/all`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "balance": 6000,
+    "accountType": "CURRENT",
+    "customerId": 1
+  },
+  {
+    "id": 2,
+    "balance": 10000,
+    "accountType": "SAVINGS",
+    "customerId": 2
+  }
+]
+```
+
+### Transfer between accounts
+`POST /accounts/transfer` // `http://localhost:8080/accounts/2/transfer`
+
+Request:
+
+```json
+{
+  "receiverAccountId": "1",
+  "amount": "2000"
+}
+```
+
+`http://localhost:8080/customers/all`
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "kadyy",
+    "email": "kadyy@gmail.com",
+    "bankAccount": {
+      "id": 1,
+      "balance": 8000,
+      "accountType": "CURRENT",
+      "customerId": 1
+    }
+  },
+  {
+    "id": 2,
+    "name": "yasmine",
+    "email": "yasmine@gmail.com",
+    "bankAccount": {
+      "id": 2,
+      "balance": 8000,
+      "accountType": "SAVINGS",
+      "customerId": 2
+    }
+  }
+]
+```
+
+### Withdraw from account
+`POST /accounts/{id}/withdraw` // `http://localhost:8080/accounts/1/withdraw`
+
+Request:
+
+```json
+{
+  "amount": "2000"
+}
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "balance": 6000,
+  "accountType": "CURRENT",
+  "customerId": 1
+}
+```
+
+### Deposit to account
+`POST /accounts/{id}/deposit` // `http://localhost:8080/accounts/2/deposit`
+
+Request:
+
+```json
+{
+  "amount": "2000"
+} 
+```
+
+Response:
+
+```json
+{
+  "id": 2,
+  "balance": 10000,
+  "accountType": "SAVINGS",
+  "customerId": 2
+}
+```
 
 ### Update account
-`PUT /accounts/{id}`
+`PUT /accounts/update/{id}` // `http://localhost:8080/accounts/update/2`
+
+Request:
+
+```json
+{
+  "balance": 6000,
+  "accountType": "CURRENT",
+}
+```
+
+Response:
+
+```json
+{
+  "id": 2,
+  "balance": 6000,
+  "accountType": "CURRENT",
+  "customerId": 1
+}
+```
 
 ### Delete account
 `DELETE /accounts/{id}`
