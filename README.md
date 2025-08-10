@@ -565,7 +565,37 @@ DTO mapping is handled in the service layer via a mapper component.
   - 400 for validation errors
   - 404 for not found
   - 409 for conflicts
-  - 500 for server errors
+
+### Error Handler
+
+```java
+@RestControllerAdvice
+public class ControllerAdvice {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotFound(EntityNotFoundException ex, HttpServletRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC).toString());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
+        body.put("message", ex.getMessage());
+        body.put("path", request.getRequestURI());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC).toString());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
+        body.put("message", ex.getMessage());
+        body.put("path", request.getRequestURI());
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+}
+```
 
 Example error:
 
@@ -606,15 +636,3 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
 - Business operations run within `@Transactional` service methods
 - You may use `@Modifying` queries for direct updates or deletions where appropriate
 - For higher concurrency, consider optimistic locking with `@Version` or explicit locking
-
----
-
-## Testing
-
-Run tests:
-
-```bash
-./mvnw test
-```
-
----
